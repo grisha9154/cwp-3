@@ -50,6 +50,9 @@ const server = net.createServer(function(client){
                     }
                 }
                 switch (data){
+                    case 'FILES':{
+                        client.write('ACK');
+                    }break;
                     case 'QA':
                     {
                         client.write('ACK');
