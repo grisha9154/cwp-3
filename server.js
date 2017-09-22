@@ -5,6 +5,8 @@ const port = 8124;
 let seed=0;
 const q = [];
 const a = [];
+let QABool = false;
+let FielsBool = false;
 fs.readFile("E:\\Univer\\5 семестр\\ПСКП\\PSKP\\Лабы\\lab2\\PSKP-cwp-2\\QA.json","utf-8",function (err, copydata) {
     let i =0;
     JSON.parse(copydata, function (key,value) {
@@ -36,7 +38,7 @@ const server = net.createServer(function(client){
                         console.log("Ошибка записии");
                     }
                 });
-
+            if(QABool){
                 for(let i=0;i<q.length;i++){
                     if(q[i]==data){
                         const str =a[getRandomInt(0,2)];
@@ -49,13 +51,18 @@ const server = net.createServer(function(client){
                         return;
                     }
                 }
+            }
                 switch (data){
                     case 'FILES':{
                         client.write('ACK');
+                        FielsBool = true;
+                        QABool = false;
                     }break;
                     case 'QA':
                     {
                         client.write('ACK');
+                        QABool = true;
+                        FielsBool = false;
                         fs.write(file_handler,socetname+' answer:'+ 'ACK'+'\n',null, 'utf-8', function(err, written){
                             if(err){
                                 console.log("Ошибка записии");
